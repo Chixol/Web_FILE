@@ -97,17 +97,19 @@ body {
     background-color: black;
 }
 
-.kakaotalk {
-    background-image: url(https://t1.kakaocdn.net/kakaocorp/kakaocorp/admin/kakaoService/c9424536018c00001.png);
+.kakaotalk{
+    background-image: url('https://t1.kakaocdn.net/kakaocorp/kakaocorp/admin/kakaoService/c9424536018c00001.png');
 }
 
-.daum {
-    background-image: url(https://t1.kakaocdn.net/kakaocorp/kakaocorp/admin/kakaoService/c9425290018c00001.png);
+.daum{
+    background-image: url('https://t1.kakaocdn.net/kakaocorp/kakaocorp/admin/kakaoService/c9425290018c00001.png');
 }
 
-.story {
-    background-image: url(https://t1.kakaocdn.net/kakaocorp/kakaocorp/admin/kakaoService/c942653a018c00001.png);
+.story{
+    background-image: url('https://t1.kakaocdn.net/kakaocorp/kakaocorp/admin/kakaoService/c942653a018c00001.png');
 }
+
+
 
 /* More Box */
 .more-box {
