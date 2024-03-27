@@ -13,7 +13,10 @@ const checkEmailButtonElement = document.getElementById('check-email-button');
 const checkAuthNumberButtonElement = document.getElementById('check-auth-number-button');
 
 const idMessageElement = document.getElementById('id-message');
-const emailMessageElement = document.getElementById('email-message')
+const emailMessageElement = document.getElementById('email-message');
+const authNumberMessageElement = document.getElementById('auth-number-message');
+
+const signInLinkElement = document.getElementById('sign-in-link');
 
 function onIdInputHandler (event) {
     const value = event.target.value;
@@ -56,7 +59,9 @@ function onCheckDuplicateClickHandler (event) {
 
 function onCheckEmailClickHandler (event) {
     const emailValue = emailInputElement.value;
+    if (!emailValue) return;
 
+   // ^[a-zA-Z0-9]*@([-.]?[a-zA-Z0-9])*\.[a-zA-Z]{2,4}$ 쌤이 만든 정규식 (아래는 퍼온거)
     const emailReg = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
     const isEmail = emailReg.test(emailValue);
 
@@ -75,8 +80,27 @@ function onCheckEmailClickHandler (event) {
 
     emailMessageElement.className = 'input-message primary';
     emailMessageElement.textContent = '인증번호가 전송되었습니다.'
+}
 
+function onCheckAuthNumberClickHandler (event) {
+    const authNumberValue = authNumberInputElement.value;
+    if (!authNumberValue) return;
+
+    const isEqualAuthNumber = authNumberValue === AUTH_NUMBER;
+    if (!isEqualAuthNumber) {
+        authNumberMessageElement.className = 'input-message error';
+        authNumberMessageElement.textContent = '인증번호가 일치하지 않습니다.';
+        return;
+    }
+    authNumberMessageElement.className = 'input-message primary';
+    authNumberMessageElement.textContent = '인증번호가 확인되었습니다.';
 }
 
 checkDuplicateButtonElement.addEventListener('click', onCheckDuplicateClickHandler);
 checkEmailButtonElement.addEventListener('click', onCheckEmailClickHandler);
+checkAuthNumberButtonElement.addEventListener('click', onCheckAuthNumberClickHandler);
+
+function onSignUpButtonClickHandler(event) {
+    window.location.href = '../sign-in';
+}
+signInLinkElement.addEventListener('click', onSignUpButtonClickHandler);

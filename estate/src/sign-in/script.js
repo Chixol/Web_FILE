@@ -18,5 +18,5 @@ function onSignInButtonClickHandler(event) {
 }
 
 const signUpLinkElement = document.getElementById('sign-up-link');
-signUpLinkElement.addEventListener('click', onSingUpLinkClickHandler);
+signUpLinkElement.addEventListener('click', onSignInButtonClickHandler);
 
