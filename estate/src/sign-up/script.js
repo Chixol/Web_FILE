@@ -4,11 +4,11 @@ const EMAIL = 'email@email.com';
 const AUTH_NUMBER = '1010';
 
 let id = '', password = '', passwordCheck = '', email = '', authNumber = '';
-let isDuplicate = true, isEmail = false, isDuplicateEmail = true, isEqualAuthNumber = false;
+let isDuplicate = true, isPasswordPattern = false, isEqualPassword = false, isEmail = false, isDuplicateEmail = true, isEqualAuthNumber = false;
 
 const idInputElement = document.getElementById('id');
 const passwordInputElement = document.getElementById('password');
-const passwordCheckElement = document.getElementById('password-check');
+const passwordCheckInputElement = document.getElementById('password-check');
 const emailInputElement = document.getElementById('email');
 const authNumberInputElement = document.getElementById('auth-number');
 
@@ -17,10 +17,12 @@ const checkEmailButtonElement = document.getElementById('check-email-button');
 const checkAuthNumberButtonElement = document.getElementById('check-auth-number-button');
 
 const idMessageElement = document.getElementById('id-message');
+const passwordMessageElement = document.getElementById('password-message');
+const passwordCheckMessageElement = document.getElementById('password-check-message');
 const emailMessageElement = document.getElementById('email-message');
 const authNumberMessageElement = document.getElementById('auth-number-message');
 
-const signUpButtonElement = document.getElementById('sign-up-button')
+const signUpButtonElement = document.getElementById('sign-up-button');
 const signInLinkElement = document.getElementById('sign-in-link');
 
 function onIdInputHandler (event) {
@@ -33,10 +35,30 @@ function onIdInputHandler (event) {
 
 function onPasswordInputHandler (event) {
     password = event.target.value;
+
+    const passwordReg = /^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]{8,13}$/;
+    isPasswordPattern = passwordReg.test(password);
+
+    if (!isPasswordPattern) {
+        passwordMessageElement.className = 'input-message error';
+        passwordMessageElement.textContent = '영문, 숫자를 혼용하여 8 ~ 13자 입력해주세요';
+        return;
+    }
+    passwordMessageElement.className = 'input-message';
+    passwordMessageElement.textContent = '';
 }
 
 function onPasswordCheckInputHandler (event) {
     passwordCheck = event.target.value;
+
+    isEqualPassword = password === passwordCheck;
+    if (!isEqualPassword) {
+        passwordCheckMessageElement.className = 'input-message error';
+        passwordCheckMessageElement.textContent = '비밀번호가 일치하지 않습니다.';
+        return;
+    }
+    passwordCheckMessageElement.className = 'input-message';
+    passwordCheckMessageElement.textContent = '';
 }
 
 function onEmailInputHandler (event) {
@@ -64,12 +86,12 @@ idInputElement.addEventListener('input', function (event) {
 passwordInputElement.addEventListener('input', function (event) {
     onPasswordInputHandler(event);
     setSignUpButton();
-})
+});
 
-passwordCheckElement.addEventListener('input', function (event) {
+passwordCheckInputElement.addEventListener('input', function (event) {
     onPasswordCheckInputHandler(event);
     setSignUpButton();
-})
+});
 
 emailInputElement.addEventListener('input', function (event) {
     onEmailInputHandler(event);
@@ -84,13 +106,13 @@ authNumberInputElement.addEventListener('input', function (event) {
 function onCheckDuplicateClickHandler (event) {
     if (!id) return;
 
-    const isDuplicate = id === ID;
-
+    isDuplicate = id === ID;
     if (isDuplicate) {
         idMessageElement.className = 'input-message error';
         idMessageElement.textContent = '이미 사용중인 아이디 입니다.';
         return;
     }
+    
     idMessageElement.className = 'input-message primary';
     idMessageElement.textContent = '사용 가능한 아이디 입니다.';
 }
@@ -98,10 +120,8 @@ function onCheckDuplicateClickHandler (event) {
 function onCheckEmailClickHandler (event) {
     if (!email) return;
 
-   // ^[a-zA-Z0-9]*@([-.]?[a-zA-Z0-9])*\.[a-zA-Z]{2,4}$ 쌤이 만든 정규식 (아래는 퍼온거)
-    const emailReg = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+    const emailReg = /^[a-zA-Z0-9]*@([-.]?[a-zA-Z0-9])*\.[a-zA-Z]{2,4}$/;
     isEmail = emailReg.test(email);
-
     if (!isEmail) {
         emailMessageElement.className = 'input-message error';
         emailMessageElement.textContent = '이메일 형식이 아닙니다.';
@@ -116,7 +136,8 @@ function onCheckEmailClickHandler (event) {
     }
 
     emailMessageElement.className = 'input-message primary';
-    emailMessageElement.textContent = '인증번호가 전송되었습니다.'
+    emailMessageElement.textContent = '인증번호가 전송되었습니다.';
+
 }
 
 function onCheckAuthNumberClickHandler (event) {
@@ -155,9 +176,10 @@ signInLinkElement.addEventListener('click', onSignInLinkClickHandler);
 function setSignUpButton () {
 
     const isPrimaryButton = 
-        id && password && passwordCheck && email && authNumber && !isDuplicate && isEmail && !isDuplicateEmail && isEqualAuthNumber;
+        id && password && passwordCheck && email && authNumber && 
+        !isDuplicate && isPasswordPattern && isEqualPassword && isEmail && !isDuplicateEmail && isEqualAuthNumber;
 
     if (isPrimaryButton) signUpButtonElement.className = 'primary-button full-width';
-    else signUpButtonElement.className = 'disable-button full-width'
+    else signUpButtonElement.className = 'disable-button full-width';
 
 }
