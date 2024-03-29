@@ -3,13 +3,13 @@
     - function 키워드 대신 화살표(=>)를 사용하여 함수를 생성하는 방법 (기본적으로 일회성, 익명)
 */
 
-const func = function (arg1, arg2) {
+let func = function (arg1, arg2) {
 
 }
 
-// func = (arg1, arg2) => {
-// 
-// }
+func = (arg1, arg2) => {
+
+}
 
 /* 
     매개변수 지정 방법 
@@ -24,7 +24,7 @@ func = arg => {  }
 
 // 매개변수가 여러개 일 경우, 매개변수 위치의 소괄호를 제거할 수 없음
 func = (arg1, arg2) => {  }
-func = arg1, arg2 => {  } // 1. func = arg1; / 2. arg = {}; 요래 선언 된거임
+// func = arg1, arg2 => {  } // 1. func = arg1; / 2. arg = {}; 요래 선언 된거임
 
 /*
     구현부 지정 방법
@@ -70,6 +70,6 @@ number.forEach(function(value, index) {
     console.log(`index : ${index} / value : ${value}`);
 });
 
-numbers.forEach((value, index) => {
+number.forEach((value, index) => {
     console.log(`index : ${index} / value : ${value}`);
 });
